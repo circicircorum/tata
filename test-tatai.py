@@ -1,8 +1,8 @@
 from tata import *
 
-_nf_compress_notation_test  = False
-_nf_basic_move_tests        = False # nb 'test*s*'
-_nf_sexy_moves_test         = False
+_nf_compress_notation_test  = True
+_nf_basic_move_tests        = True # nb 'test*s*'
+_nf_sexy_moves_test         = True
 
 # namesss
 compress_notation_test      = _nf_compress_notation_test
@@ -10,10 +10,10 @@ basic_move_tests            = _nf_basic_move_tests # nb 'test*s*'
 sexy_moves_test             = _nf_sexy_moves_test
 
 # test some moves
-four_moves_tests    = False
-ortho_moves_test    = False
-arb_scramble_test   = False
-ttl_cube_test       = False
+four_moves_tests    = True
+ortho_moves_test    = True
+arb_scramble_test   = True
+ttl_cube_test       = True
 
 # generate moves
 move_generation_test     = True

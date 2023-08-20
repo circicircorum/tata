@@ -124,44 +124,39 @@ def translate_mode(mode_a, mode_b):
     # new_cube_translation = new_cube_translation.replace('w_', 'p_', 1)
     return new_cube_translation
 
+_nf_move_mapping_dict = {
+    # x-moves
+    'x'     : 'TQRSCBADJKLIHEFGONMPXUVWtqrsbadcjklihefgnmpoxuvw',
+    'x2'    : 'PONMRQTSKLIJDCBAFEHGWXUVonmpqtsrklijcbadehgfwxuv',
+    'x\''   : 'GFEHNOPMLIJKSRQTBCDAVWXUfehgnopmlijkrqtsbcdavwxu',
+    # y-moves
+    'y'     : 'BCDAVUXWGFEHNOPMLIJKSTQRbcdavuxwfehgnopmlijkrstq',
+    'y2'    : 'CDABTSRQXUVWOPMNHGFEJKLIcdabsrqtuvwxopmngfehijkl',
+    'y\''   : 'DABCKJILRSTQPMNOWXUVFEHGdabcjilkrstqpmnoxuvwfehg',
+    # U-moves
+    'U'     : 'BCDAVUGHIFELMNOPQRJKSTWXbcdavfghieklmnopqrjtuswx',
+    'U2'    : 'CDABTSGHIUVLMNOPQRFEJKWXcdabsfghivklmnopqretujwx',
+    'U\''   : 'DABCKJGHISTLMNOPQRUVFEWXdabcjfghisklmnopqrvtuewx',
+    # F-moves
+    'F'     : 'JBCIHEFGONKLMWVPQRSTUDAXabcihefgnjklmwopqrstuvdx',
+    'F2'    : 'NBCOGHEFVWKLMADPQRSTUIJXabcnghefwjklmdopqrstuvix',
+    'F\''   : 'WBCVFGHEDAKLMJIPQRSTUONXabcwfghedjklmiopqrstuvnx'
+}
+
 debug_perform_move = False
 debug_perform_move_second = False
+
+alpha = 'abcdefghijklmnopqrstuvwx'
+alpha_cap = alpha.upper()
+_nf_solved_cube_state = ''.join([alpha_cap, alpha])
+if debug_perform_move_second == True:
+    print(_nf_solved_cube_state)
+if debug_perform_move == True:
+    print(f'alpha_cap: {alpha_cap}')
+
 def perform_move(cube, move):
-    # print(f"perform_move: function stub for perform_move. Move {move} was asked to be performed. Returning original cube...")
-
-    # x-moves
-    if move == 'x':
-        move_mapping = 'TQRSCBADJKLIHEFGONMPXUVWtqrsbadcjklihefgnmpoxuvw'
-    elif move == 'x2':
-        move_mapping = 'PONMRQTSKLIJDCBAFEHGWXUVonmpqtsrklijcbadehgfwxuv'
-    elif move == 'x\'':
-        move_mapping = 'GFEHNOPMLIJKSRQTBCDAVWXUfehgnopmlijkrqtsbcdavwxu'
-
-    # y-moves
-    elif move == 'y':
-        # 'BCDA,VUXW,GFEH,NOPM,LIJK,STQR_bcda,vuxw,fehg,nopm,lijk,rstq_'
-        move_mapping = 'BCDAVUXWGFEHNOPMLIJKSTQRbcdavuxwfehgnopmlijkrstq'
-    elif move == 'y2':
-        move_mapping = 'CDABTSRQXUVWOPMNHGFEJKLIcdabsrqtuvwxopmngfehijkl'
-    elif move == 'y\'':
-        move_mapping = 'DABCKJILRSTQPMNOWXUVFEHGdabcjilkrstqpmnoxuvwfehg'
-
-    # U-moves
-    elif move == 'U':
-        move_mapping = 'BCDAVUGHIFELMNOPQRJKSTWXbcdavfghieklmnopqrjtuswx'
-    elif move == 'U2':
-        move_mapping = 'CDABTSGHIUVLMNOPQRFEJKWXcdabsfghivklmnopqretujwx'
-    elif move == 'U\'':
-        move_mapping = 'DABCKJGHISTLMNOPQRUVFEWXdabcjfghisklmnopqrvtuewx'
-
-    # F-moves
-    elif move == 'F':
-        move_mapping = 'JBCIHEFGONKLMWVPQRSTUDAXabcihefgnjklmwopqrstuvdx'
-    elif move == 'F2':
-        move_mapping = 'NBCOGHEFVWKLMADPQRSTUIJXabcnghefwjklmdopqrstuvix'
-    elif move == 'F\'':
-        move_mapping = 'WBCVFGHEDAKLMJIPQRSTUONXabcwfghedjklmiopqrstuvnx'
-
+    if move in _nf_move_mapping_dict:
+        move_mapping = _nf_move_mapping_dict[move]
     # R-moves
     elif move == 'R':
         move_mapping = 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx'
@@ -169,27 +164,17 @@ def perform_move(cube, move):
         move_mapping = 'ABNMRFGSKLIJDCOPQEHTUVWXabmdefgrklijcnopqhstuvwx'
     elif move == 'R\'':
         move_mapping = 'ABEHNFGMLIJKSROPQCDTUVWXabhdefgmlijkrnopqcstuvwx'
-
     else:
         print(f"perform_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
-        # move_mapping = ''.join('abcdefghijklmnopqrstuvwx'.upper(), 'abcdefghijklmnopqrstuvwx')
         return cube
-
-    alpha = 'abcdefghijklmnopqrstuvwx'
-    alpha_cap = alpha.upper()
-    solved_cube_state = ''.join([alpha_cap, alpha])
-    if debug_perform_move_second == True:
-        print(solved_cube_state)
-    if debug_perform_move == True:
-        print(f'alpha_cap: {alpha_cap}')
 
     new_cube_l = []
     for p in cube:
         if p in move_mapping:
             if debug_perform_move_second == True:
-                to_add = move_mapping[solved_cube_state.index(p)]
+                to_add = move_mapping[_nf_solved_cube_state.index(p)]
                 print(f"pm: {to_add}")
-            new_cube_l.append(move_mapping[solved_cube_state.index(p)])
+            new_cube_l.append(move_mapping[_nf_solved_cube_state.index(p)])
         else:
             if debug_perform_move == True:
                 print(f'perform_move: {p} not in mapping')
@@ -205,7 +190,7 @@ _nf_primitive_moves_list = []
 for bm in _nf_primitive_moves_list_bare:
     _nf_primitive_moves_list.extend([bm, bm + '2', bm + '\''])
 
-debug_prim_list = True
+debug_prim_list = False
 if debug_prim_list == True:
     print(f"debug(pl):: _nf_primitive_moves_list: {_nf_primitive_moves_list}")
 
@@ -225,111 +210,17 @@ _nf_composite_moves_dict = {
 }
 
 def do_move(cube, move):
-    # dictionary of moves:
-
-    # # code for debugging; may be removed in the future
-    # if move not in _nf_primitive_moves_list and debug_prim_list == True:
-    #     print(f"{move} is NOT a primitive move.")
-
     # decide how the move should be performed
     if move in _nf_primitive_moves_list:
-        # if debug_prim_list == True:
-        #     print(f"{move} is a primitive move.")
+        if debug_prim_list == True:
+            print(f"{move} is a primitive move.")
         cube = perform_move(cube, move)
     elif move in _nf_composite_moves_dict.keys():
         if debug_prim_list == True:
             print(f"{move} is a composite move performed using ({' '.join(_nf_composite_moves_dict[move])})")
         cube = moves(cube, _nf_composite_moves_dict[move])
-    # nb this block "connects" with elif statements below
-    # with _nf_primitive_moves_list and _nf_compositve_moves_dict the commented code can be made obsolete
-
-    # # move "primitives"
-    # # x-moves
-    # elif move == 'x':
-    #     cube = perform_move(cube, 'x')
-    # elif move == 'x2':
-    #     cube = perform_move(cube, 'x2')
-    # elif move == 'x\'':
-    #     cube = perform_move(cube, 'x\'')
-
-    # # y-moves
-    # elif move == 'y':
-    #     cube = perform_move(cube, 'y')
-    # elif move == 'y2':
-    #     cube = perform_move(cube, 'y2')
-    # elif move == 'y\'':
-    #     cube = perform_move(cube, 'y\'')
-
-    # # U-moves
-    # elif move == 'U':
-    #     cube = perform_move(cube, 'U')
-    # elif move == 'U2':
-    #     cube = perform_move(cube, 'U2')
-    # elif move == 'U\'':
-    #     cube = perform_move(cube, 'U\'')
-
-    # # F-moves
-    # elif move == 'F':
-    #     cube = perform_move(cube, 'F')
-    # elif move == 'F2':
-    #     cube = perform_move(cube, 'F2')
-    # elif move == 'F\'':
-    #     cube = perform_move(cube, 'F\'')
-
-    # # R-moves
-    # elif move == 'R':
-    #     cube = perform_move(cube, 'R')
-    # elif move == 'R2':
-    #     cube = perform_move(cube, 'R2')
-    # elif move == 'R\'':
-    #     cube = perform_move(cube, 'R\'')
-
-    # # composite moves below
-    # # D-moves
-    # elif move == 'D':
-    #     cube = perform_move(cube, 'x2')
-    #     cube = perform_move(cube, 'U')
-    #     cube = perform_move(cube, 'x2')
-    # elif move == 'D2':
-    #     cube = perform_move(cube, 'x2')
-    #     cube = perform_move(cube, 'U2')
-    #     cube = perform_move(cube, 'x2')
-    # elif move == 'D\'':
-    #     cube = perform_move(cube, 'x2')
-    #     cube = perform_move(cube, 'U\'')
-    #     cube = perform_move(cube, 'x2')
-    # # B-moves
-    # elif move == 'B':
-    #     cube = perform_move(cube, 'x\'')
-    #     cube = perform_move(cube, 'U')
-    #     cube = perform_move(cube, 'x')
-    # elif move == 'B2':
-    #     cube = perform_move(cube, 'x\'')
-    #     cube = perform_move(cube, 'U2')
-    #     cube = perform_move(cube, 'x')
-    # elif move == 'B\'':
-    #     cube = perform_move(cube, 'x\'')
-    #     cube = perform_move(cube, 'U\'')
-    #     cube = perform_move(cube, 'x')
-    # # L-moves
-    # elif move == 'L':
-    #     cube = perform_move(cube, 'y2')
-    #     cube = perform_move(cube, 'R')
-    #     cube = perform_move(cube, 'y2')
-    # elif move == 'L2':
-    #     cube = perform_move(cube, 'y2')
-    #     cube = perform_move(cube, 'R2')
-    #     cube = perform_move(cube, 'y2')
-    # elif move == 'L\'':
-    #     cube = perform_move(cube, 'y2')
-    #     cube = perform_move(cube, 'R\'')
-    #     cube = perform_move(cube, 'y2')
-    
     else:
-        # note that using another if instead of elif may cause this line to run
-        # when a move above the (new) if statement is asked for. (aka beware of making new bugs)
         print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
-
     return cube
 
 def moves(cube, moves):
