@@ -1,14 +1,28 @@
 from tata import *
 
-def main():
-    print('main:: compress_notation test...')
-    print('human readable (T):', compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'))
-    print('human readble (F):', compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx', human_readable=False))
-    print('human readable (T), mode prefixed:', compress_notation('w_ABCD,EFGH,IJKL,MNOP,QRST,UVWX,abcd,efgh,ijkl,mnop,qrst,uvwx_'))
-    print('hr(T), mode prefixed, prefix mode:', compress_notation('w_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx_', prefix_mode=True))
-    print()
+_nf_compress_notation_test  = False
+_nf_basic_move_tests        = False # nb 'test*s*'
+_nf_sexy_moves_test         = False
 
-    if False:
+compress_notation_test      = _nf_compress_notation_test
+basic_move_tests            = _nf_basic_move_tests # nb 'test*s*'
+sexy_moves_test             = _nf_sexy_moves_test
+
+four_moves_tests    = False
+ortho_moves_test    = False
+arb_scramble_test   = True
+ttl_cube_test       = True
+
+def main():
+    if compress_notation_test == True:
+        print('main:: compress_notation test...')
+        print('human readable (T):', compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'))
+        print('human readble (F):', compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx', human_readable=False))
+        print('human readable (T), mode prefixed:', compress_notation('w_ABCD,EFGH,IJKL,MNOP,QRST,UVWX,abcd,efgh,ijkl,mnop,qrst,uvwx_'))
+        print('hr(T), mode prefixed, prefix mode:', compress_notation('w_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx_', prefix_mode=True))
+        print()
+
+    if basic_move_tests == True:
         print('performing some test moves...')
         cube = make_new_cube()
         cube = moves(cube, ['R'])
@@ -31,7 +45,7 @@ def main():
             print(f"cube:: {m}: {cube}")
         print()
 
-    if False:
+    if sexy_moves_test == True:
         # test (RUR'U')*6
         for i in range(13):
             cube = make_new_cube()
@@ -39,7 +53,8 @@ def main():
             cube = moves(cube, moveseq)
             print(f"(R U R' U') x {i}: {cube}")
         print()
-
+    
+    if four_moves_tests == True:
         # test R4
         for i in range(5):
             cube = make_new_cube()
@@ -73,7 +88,7 @@ def main():
                 print(f"{m}x{i}: {cube}")
             print()
 
-    if False:
+    if ortho_moves_test == True:
         # test RU
         for i in range(45 * 6 + 1):
             cube = make_new_cube()
@@ -110,30 +125,32 @@ def main():
                 print(f"(D U)*{i}: {cube}")
         print()
     
-    if False:
+    if  arb_scramble_test == True:
         # test scramble (no L-moves)
-        print()
         # N.B. that StO to BTFR reqs z' x';
         # i.e. scramble: "z' x' F B R' B U B R F2 U' R2 F2 D' R2 U F2 R2 D' B2 U' R F'" from StO;
         move_seq_spec = "F B R' B U B R F2 U' R2 F2 D' R2 U F2 R2 D' B2 U' R F'"
         move_seq_spec_l = move_seq_spec.split()
+
+        cube = make_new_cube()
         for m in move_seq_spec_l:
             #cube = moves(cube, move_seq_spec_l)
             cube = moves(cube, [m])
-            print(f'cube +{m}:\t{cube}')
+            #print(f'cube +{m}:\t{cube}')
         print()
     
-    cube_ttl = translate_mode('a', 'b')
-    print(f'tl_mode test: {cube_ttl}')
-    # w_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx_
-    cnct = compress_notation(cube_ttl, prefix_mode=True)
-    # cnct = compressed_notation_cube_ttl
-    cnct = cnct.replace('w_', 'p_1_', 2)
-    cnct = cnct.replace(',', '.', 2)
-    cnct = cnct.replace('.', ',', 1)
-    cnct = cnct.replace('.', '_2_', 1)
-    print(f'cube_ttl: {cnct}')
-    # print(f'hr(T), mode prefixed, prefix mode, +extra edits: {cnct}')
+    if ttl_cube_test == True:
+        cube_ttl = translate_mode('a', 'b')
+        print(f'tl_mode test: {cube_ttl}')
+        # w_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx_
+        cnct = compress_notation(cube_ttl, prefix_mode=True)
+        # cnct = compressed_notation_cube_ttl
+        cnct = cnct.replace('w_', 'p_1_', 2)
+        cnct = cnct.replace(',', '.', 2)
+        cnct = cnct.replace('.', ',', 1)
+        cnct = cnct.replace('.', '_2_', 1)
+        print(f'cube_ttl: {cnct}')
+        # print(f'hr(T), mode prefixed, prefix mode, +extra edits: {cnct}')
 
 if __name__ == '__main__':
     main()

@@ -164,7 +164,8 @@ def perform_move(cube, move):
     return new_cube
 
 def do_move(cube, move):
-    # R-moves (TBI)
+    # move primitives: R, y, U, x'
+    # R-moves
     if move == 'R':
         cube = perform_move(cube, 'R')
     elif move == 'R2':
@@ -175,6 +176,17 @@ def do_move(cube, move):
         cube = perform_move(cube, 'R')
         cube = perform_move(cube, 'R')
         cube = perform_move(cube, 'R')
+    # y-moves
+    elif move == 'y':
+        cube = perform_move(cube, 'y')
+    elif move == 'y2':
+        cube = perform_move(cube, 'y')
+        cube = perform_move(cube, 'y')
+    elif move == 'y\'':
+        #cube = do_move(cube, 'R2') # note: recursively defined
+        cube = perform_move(cube, 'y')
+        cube = perform_move(cube, 'y')
+        cube = perform_move(cube, 'y')
     # U-moves
     elif move == 'U':
         cube = perform_move(cube, 'U')
@@ -195,6 +207,8 @@ def do_move(cube, move):
         cube = perform_move(cube, 'x\'')
     elif move == 'x\'':
         cube = perform_move(cube, 'x\'')
+    
+    # composite moves below
     # F-moves
     elif move == 'F':
         cube = do_move(cube, 'x')
@@ -236,12 +250,16 @@ def do_move(cube, move):
         cube = do_move(cube, 'x')
     else:
         print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
-        
-
 
     return cube
 
 def moves(cube, moves):
+    if isinstance(moves, list):
+        pass # maybe it will do sth in e futur
+    else:
+        if _nf_suppress_warnings == False:
+            print(f"WARNING:: moves: the variable 'moves' is a {type(moves)} instead of a list; \
+                    be very sure that this is what you want to do!")
     for move in moves:
         cube = do_move(cube, move)
     return cube
