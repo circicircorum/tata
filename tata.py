@@ -48,7 +48,7 @@ def compress_notation(cube, mode='01', human_readable=True, prefix_mode=False):
     if mode != '01':
         print('compress_notation: other modes are not yet supported, returning original cube...')
         return cube
-    
+
     # mode: 'w';'01';
     if cube[0] == 'w':
         cube_stripped = cube[2:-1]
@@ -128,7 +128,7 @@ debug_perform_move = False
 debug_perform_move_second = False
 def perform_move(cube, move):
     # print(f"perform_move: function stub for perform_move. Move {move} was asked to be performed. Returning original cube...")
-    
+
     # x-moves
     if move == 'x':
         move_mapping = 'TQRSCBADJKLIHEFGONMPXUVWtqrsbadcjklihefgnmpoxuvw'
@@ -136,7 +136,7 @@ def perform_move(cube, move):
         move_mapping = 'PONMRQTSKLIJDCBAFEHGWXUVonmpqtsrklijcbadehgfwxuv'
     elif move == 'x\'':
         move_mapping = 'GFEHNOPMLIJKSRQTBCDAVWXUfehgnopmlijkrqtsbcdavwxu'
-    
+
     # y-moves
     elif move == 'y':
         # 'BCDA,VUXW,GFEH,NOPM,LIJK,STQR_bcda,vuxw,fehg,nopm,lijk,rstq_'
@@ -161,7 +161,7 @@ def perform_move(cube, move):
         move_mapping = 'NBCOGHEFVWKLMADPQRSTUIJXabcnghefwjklmdopqrstuvix'
     elif move == 'F\'':
         move_mapping = 'WBCVFGHEDAKLMJIPQRSTUONXabcwfghedjklmiopqrstuvnx'
-    
+
     # R-moves
     elif move == 'R':
         move_mapping = 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx'
@@ -169,12 +169,12 @@ def perform_move(cube, move):
         move_mapping = 'ABNMRFGSKLIJDCOPQEHTUVWXabmdefgrklijcnopqhstuvwx'
     elif move == 'R\'':
         move_mapping = 'ABEHNFGMLIJKSROPQCDTUVWXabhdefgmlijkrnopqcstuvwx'
-    
+
     else:
         print(f"perform_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
         # move_mapping = ''.join('abcdefghijklmnopqrstuvwx'.upper(), 'abcdefghijklmnopqrstuvwx')
         return cube
-    
+
     alpha = 'abcdefghijklmnopqrstuvwx'
     alpha_cap = alpha.upper()
     solved_cube_state = ''.join([alpha_cap, alpha])
@@ -200,7 +200,7 @@ def perform_move(cube, move):
 
 def do_move(cube, move):
     # move "primitives"
-    
+
     # x-moves
     if move == 'x':
         cube = perform_move(cube, 'x')
@@ -208,7 +208,7 @@ def do_move(cube, move):
         cube = perform_move(cube, 'x2')
     elif move == 'x\'':
         cube = perform_move(cube, 'x\'')
-    
+
     # y-moves
     elif move == 'y':
         cube = perform_move(cube, 'y')
@@ -216,7 +216,7 @@ def do_move(cube, move):
         cube = perform_move(cube, 'y2')
     elif move == 'y\'':
         cube = perform_move(cube, 'y\'')
-    
+
     # U-moves
     elif move == 'U':
         cube = perform_move(cube, 'U')
@@ -224,7 +224,7 @@ def do_move(cube, move):
         cube = perform_move(cube, 'U2')
     elif move == 'U\'':
         cube = perform_move(cube, 'U\'')
-    
+
     # F-moves
     elif move == 'F':
         cube = perform_move(cube, 'F')
@@ -232,7 +232,7 @@ def do_move(cube, move):
         cube = perform_move(cube, 'F2')
     elif move == 'F\'':
         cube = perform_move(cube, 'F\'')
-    
+
     # R-moves
     elif move == 'R':
         cube = perform_move(cube, 'R')
@@ -240,47 +240,47 @@ def do_move(cube, move):
         cube = perform_move(cube, 'R2')
     elif move == 'R\'':
         cube = perform_move(cube, 'R\'')
-    
+
     # composite moves below
     # D-moves
     elif move == 'D':
-        cube = do_move(cube, 'x2')
+        cube = perform_move(cube, 'x2')
         cube = perform_move(cube, 'U')
-        cube = do_move(cube, 'x2')
+        cube = perform_move(cube, 'x2')
     elif move == 'D2':
-        cube = do_move(cube, 'x2')
-        cube = do_move(cube, 'U2')
-        cube = do_move(cube, 'x2')
+        cube = perform_move(cube, 'x2')
+        cube = perform_move(cube, 'U2')
+        cube = perform_move(cube, 'x2')
     elif move == 'D\'':
-        cube = do_move(cube, 'x2')
-        cube = do_move(cube, 'U\'')
-        cube = do_move(cube, 'x2')
+        cube = perform_move(cube, 'x2')
+        cube = perform_move(cube, 'U\'')
+        cube = perform_move(cube, 'x2')
     # B-moves
     elif move == 'B':
         cube = perform_move(cube, 'x\'')
         cube = perform_move(cube, 'U')
-        cube = do_move(cube, 'x')
+        cube = perform_move(cube, 'x')
     elif move == 'B2':
         cube = perform_move(cube, 'x\'')
-        cube = do_move(cube, 'U2')
-        cube = do_move(cube, 'x')
+        cube = perform_move(cube, 'U2')
+        cube = perform_move(cube, 'x')
     elif move == 'B\'':
         cube = perform_move(cube, 'x\'')
-        cube = do_move(cube, 'U\'')
-        cube = do_move(cube, 'x')
+        cube = perform_move(cube, 'U\'')
+        cube = perform_move(cube, 'x')
     # L-moves
     elif move == 'L':
-        cube = do_move(cube, 'y2')
+        cube = perform_move(cube, 'y2')
         cube = perform_move(cube, 'R')
-        cube = do_move(cube, 'y2')
+        cube = perform_move(cube, 'y2')
     elif move == 'L2':
-        cube = do_move(cube, 'y2')
-        cube = do_move(cube, 'R2')
-        cube = do_move(cube, 'y2')
+        cube = perform_move(cube, 'y2')
+        cube = perform_move(cube, 'R2')
+        cube = perform_move(cube, 'y2')
     elif move == 'L\'':
-        cube = do_move(cube, 'y2')
-        cube = do_move(cube, 'R\'')
-        cube = do_move(cube, 'y2')
+        cube = perform_move(cube, 'y2')
+        cube = perform_move(cube, 'R\'')
+        cube = perform_move(cube, 'y2')
     
     else:
         # note that using another if instead of elif may cause this line to run
