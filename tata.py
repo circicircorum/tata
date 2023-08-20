@@ -148,9 +148,9 @@ debug_perform_move_second = False
 
 alpha = 'abcdefghijklmnopqrstuvwx'
 alpha_cap = alpha.upper()
-_nf_solved_cube_state = ''.join([alpha_cap, alpha])
+_nf_solved_cube_state_w = ''.join([alpha_cap, alpha])
 if debug_perform_move_second == True:
-    print(_nf_solved_cube_state)
+    print(_nf_solved_cube_state_w)
 if debug_perform_move == True:
     print(f'alpha_cap: {alpha_cap}')
 
@@ -172,9 +172,9 @@ def perform_move(cube, move):
     for p in cube:
         if p in move_mapping:
             if debug_perform_move_second == True:
-                to_add = move_mapping[_nf_solved_cube_state.index(p)]
+                to_add = move_mapping[_nf_solved_cube_state_w.index(p)]
                 print(f"pm: {to_add}")
-            new_cube_l.append(move_mapping[_nf_solved_cube_state.index(p)])
+            new_cube_l.append(move_mapping[_nf_solved_cube_state_w.index(p)])
         else:
             if debug_perform_move == True:
                 print(f'perform_move: {p} not in mapping')
