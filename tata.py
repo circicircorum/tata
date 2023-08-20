@@ -205,28 +205,37 @@ _nf_primitive_moves_list = []
 for bm in _nf_primitive_moves_list_bare:
     _nf_primitive_moves_list.extend([bm, bm + '2', bm + '\''])
 
-debug_prim_list = True
+debug_prim_list = False
 if debug_prim_list == True:
     print(f"debug(pl):: _nf_primitive_moves_list: {_nf_primitive_moves_list}")
 
-_nf_composite_moves_dict = {}
+_nf_composite_moves_dict = {
+    # D-moves
+    'D'     : ['x2', 'U', 'x2'],
+    'D2'    : ['x2', 'U2', 'x2'],
+    'D\''   : ['x2', 'U\'', 'x2'],
+    # B-moves
+    'B'     : ['x\'', 'U', 'x'],
+    'B2'    : ['x\'', 'U2', 'x'],
+    'B\''   : ['x\'', 'U\'', 'x'],
+}
 
 def do_move(cube, move):
     # dictionary of moves:
 
-    # code for debugging; may be removed in the future
-    if move not in _nf_primitive_moves_list:
-        if debug_prim_list == True:
-            print(f"{move} is NOT a primitive move.")
+    # # code for debugging; may be removed in the future
+    # if move not in _nf_primitive_moves_list and debug_prim_list == True:
+    #     print(f"{move} is NOT a primitive move.")
 
     # decide how the move should be performed
     if move in _nf_primitive_moves_list:
         if debug_prim_list == True:
             print(f"{move} is a primitive move.")
         cube = perform_move(cube, move)
-
-    # elif move in _nf_composite_moves_dict.keys():
-    #     cube = do_move(cube, composite_moves_list[move])
+    elif move in _nf_composite_moves_dict.keys():
+        if debug_prim_list == True:
+            print(f"{move} is a composite move performed using ({' '.join(_nf_composite_moves_dict[move])})")
+        cube = moves(cube, _nf_composite_moves_dict[move])
     # nb this block "connects" with elif statements below
 
     # move "primitives"
