@@ -2,7 +2,7 @@ from tata import *
 
 _nf_compress_notation_test  = True
 _nf_basic_move_tests        = True # nb 'test*s*'
-_nf_sexy_moves_test         = True
+_nf_sexy_moves_test         = False
 
 # namesss
 compress_notation_test      = _nf_compress_notation_test
@@ -10,7 +10,7 @@ basic_move_tests            = _nf_basic_move_tests # nb 'test*s*'
 sexy_moves_test             = _nf_sexy_moves_test
 
 # test some moves
-four_moves_tests    = True
+four_moves_tests    = False
 ortho_moves_test    = True
 arb_scramble_test   = True
 ttl_cube_test       = True
@@ -134,7 +134,7 @@ def main():
                 print(f"(D U)*{i}: {cube}")
         print()
     
-    if  arb_scramble_test == True:
+    if arb_scramble_test == True:
         # test scramble (no L-moves)
         # N.B. that StO to BTFR reqs z' x';
         # i.e. scramble: "z' x' F B R' B U B R F2 U' R2 F2 D' R2 U F2 R2 D' B2 U' R F'" from StO;
@@ -160,6 +160,7 @@ def main():
         cnct = cnct.replace('.', '_2_', 1)
         print(f'cube_ttl: {cnct}')
         # print(f'hr(T), mode prefixed, prefix mode, +extra edits: {cnct}')
+        print()
 
     if move_generation_test == True:
         # generate moves so they can be "hardcoded" / added to the list of primitive moves
@@ -168,7 +169,7 @@ def main():
                 cube = make_new_cube()
                 moveseq = [m] * i
                 cube = moves(cube, moveseq)
-                print(f"{m}{i}: {cube}")
+                print(f"{m}{i}\t: {cube}")
             print()
     
     if move_generation_test_two == True:
@@ -178,7 +179,7 @@ def main():
                 cube = make_new_cube()
                 moveseq = [m + deco]
                 cube = moves(cube, moveseq)
-                print(f"{m}{deco}: {cube}")
+                print(f"{m}{deco}\t: {cube}")
             print()
 
     if arb_scr_test_two == True:
