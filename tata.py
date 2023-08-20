@@ -264,8 +264,8 @@ def do_move(cube, move):
         cube = do_move(cube, 'R\'')
         cube = do_move(cube, 'y2')
     else:
-        # note that using another if instead of elif may trigger this line to be performed
-        # when a move above the (new) if statemnet is asked for. (aka beware of making new bugs)
+        # note that using another if instead of elif may cause this line to run
+        # when a move above the (new) if statement is asked for. (aka beware of making new bugs)
         print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
 
     return cube

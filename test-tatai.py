@@ -4,14 +4,19 @@ _nf_compress_notation_test  = False
 _nf_basic_move_tests        = False # nb 'test*s*'
 _nf_sexy_moves_test         = False
 
+# namesss
 compress_notation_test      = _nf_compress_notation_test
 basic_move_tests            = _nf_basic_move_tests # nb 'test*s*'
 sexy_moves_test             = _nf_sexy_moves_test
 
-four_moves_tests    = True
+# test some moves
+four_moves_tests    = False
 ortho_moves_test    = False
-arb_scramble_test   = True
-ttl_cube_test       = True
+arb_scramble_test   = False
+ttl_cube_test       = False
+
+# generate moves
+move_generation_test = True
 
 def main():
     if compress_notation_test == True:
@@ -151,6 +156,16 @@ def main():
         cnct = cnct.replace('.', '_2_', 1)
         print(f'cube_ttl: {cnct}')
         # print(f'hr(T), mode prefixed, prefix mode, +extra edits: {cnct}')
+
+    if generate_moves == True:
+        # generate moves so they can be "hardcoded" / added to the list of primitive moves
+        for m in ['U', 'F', 'R', 'D', 'B', 'L']:
+            for i in range(1,5):
+                cube = make_new_cube()
+                moveseq = [m] * i
+                cube = moves(cube, moveseq)
+                print(f"{m}{i}: {cube}")
+            print()
 
 if __name__ == '__main__':
     main()
