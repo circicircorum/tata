@@ -16,7 +16,8 @@ arb_scramble_test   = False
 ttl_cube_test       = False
 
 # generate moves
-move_generation_test = False
+move_generation_test     = True
+move_generation_test_two = True
 
 # another arbitrary scramble
 arb_scr_test_two = True
@@ -170,6 +171,16 @@ def main():
                 print(f"{m}{i}: {cube}")
             print()
     
+    if move_generation_test_two == True:
+        # test double and inverse moves
+        for m in ['U', 'F', 'R', 'D', 'B', 'L', 'x', 'y']:
+            for deco in ['', '2', '\'']:
+                cube = make_new_cube()
+                moveseq = [m + deco]
+                cube = moves(cube, moveseq)
+                print(f"{m}{deco}: {cube}")
+            print()
+
     if arb_scr_test_two == True:
         pass
 
