@@ -135,6 +135,9 @@ def perform_move(cube, move):
         move_mapping = 'BCDAVUGHIFELMNOPQRJKSTWXbcdavfghieklmnopqrjtuswx'
     elif move == 'R':
         move_mapping = 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx'
+    elif move == 'y':
+        # 'BCDA,VUXW,GFEH,NOPM,LIJK,STQR_bcda,vuxw,fehg,nopm,lijk,rstq_'
+        move_mapping = 'BCDAVUXWGFEHNOPMLIJKSTQRbcdavuxwfehgnopmlijkrstq'
     else:
         print(f"perform_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
         # move_mapping = ''.join('abcdefghijklmnopqrstuvwx'.upper(), 'abcdefghijklmnopqrstuvwx')
@@ -183,7 +186,6 @@ def do_move(cube, move):
         cube = perform_move(cube, 'y')
         cube = perform_move(cube, 'y')
     elif move == 'y\'':
-        #cube = do_move(cube, 'R2') # note: recursively defined
         cube = perform_move(cube, 'y')
         cube = perform_move(cube, 'y')
         cube = perform_move(cube, 'y')
@@ -208,7 +210,7 @@ def do_move(cube, move):
     elif move == 'x\'':
         cube = perform_move(cube, 'x\'')
     
-    # composite moves below
+    # composite moves below; will hopefully be turned primitive in later updates
     # F-moves
     elif move == 'F':
         cube = do_move(cube, 'x')
@@ -248,7 +250,22 @@ def do_move(cube, move):
         cube = perform_move(cube, 'x\'')
         cube = do_move(cube, 'U\'')
         cube = do_move(cube, 'x')
+    # L-moves
+    elif move == 'L':
+        cube = do_move(cube, 'y2')
+        cube = perform_move(cube, 'R')
+        cube = do_move(cube, 'y2')
+    elif move == 'L2':
+        cube = do_move(cube, 'y2')
+        cube = do_move(cube, 'R2')
+        cube = do_move(cube, 'y2')
+    elif move == 'L\'':
+        cube = do_move(cube, 'y2')
+        cube = do_move(cube, 'R\'')
+        cube = do_move(cube, 'y2')
     else:
+        # note that using another if instead of elif may trigger this line to be performed
+        # when a move above the (new) if statemnet is asked for. (aka beware of making new bugs)
         print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
 
     return cube
@@ -264,33 +281,46 @@ def moves(cube, moves):
         cube = do_move(cube, move)
     return cube
 
-# note the different ways in which the cube state is represented.
+# nb the different ways in which the cube state is represented.
 def make_new_cube(mode='01-l'):#mode='01'):
-    # w
+
+    # handle mode name transformations
+    mode = mode.replace('w', '01', 1) # TBD: shd we w->01 or 01->w?
+    mode = mode.replace('p', '02', 1) # be careful that this does not work in other contexts;
+    mode = mode.replace('b', '03', 1) # replacing characters in cube states may affect edges etc.
+    mode = mode.replace('m', '04', 1) # specifying how many instances to replace may help, but
+    #mode = mode.replace('x', '05', 1) # when modes are implicit, edges may be affected anyway;
+    #mode = mode.replace('l', '06', 1) # aka be careful/mindful when working on strings and consider
+    #mode = mode.replace('s', '07', 1) # different situations/formats the cube state may be represented in.
+    # nb w-l -> 01-l -> 01-06 (be sure that this is what you want to do)
+
+    # w: where-is-it notation (wii,w)
     if mode == '01':
         return '01_1_ABCD,MNOP_2_abcd,hfrt,mnop_'
-    # w-simp(?)
+    # w-simp(?): implied corner-edge order, among other things
     if mode == '01-s':
         return '01_ABCD,MNOP_abcd,hfrt,mnop_'
-    # w-learn
+    # w-learn: (tentatively for generating move mappings)
     if mode == '01-l':
         return '01_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
-    # w-learn-implied
+    # w-learn-implied: mode wii is implied
     if mode == '01-li':
         return 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
-    # w-full
+    # w-full: "human-readable" fully expanded notation for sanity checks and possibly convenience
     if mode == '01-f':
         return '011_1_ABCD,EFGH,IJKL,MNOP,QRST,UVWX_2_abcd,efgh,ijkl,mnop,qrst,uvwx_'
-    # w-ultra-full
+    # w-ultra-full: human-readable full notation with the reduced form in brackets
     if mode == '01-ff':
         return '0111_1_ABCD,EFGH,IJKL,MNOP,QRST,UVWX_(ABCD,MNOP)_2_abcd,efgh,ijkl,mnop,qrst,uvwx_(abcd,hfrt,mnop)_'
-    # p
+    # p: positional/what-is-at notation; identical to wii notation in the solved state
     if mode == '02-0' or mode == '02-1':
         return '02_1_ABCD,MNOP_2_abcd,hfrt,mnop_'
-    # b
+    # b: bld targets; empty string in solved state
     if mode == '03':
         return ''
-
+    # m: moves performed; non-unique representation of a cube state; empty string in solved state
+    if mode == '04':
+        return ''
 
 def main():
     return 'True'

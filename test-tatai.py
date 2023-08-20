@@ -8,7 +8,7 @@ compress_notation_test      = _nf_compress_notation_test
 basic_move_tests            = _nf_basic_move_tests # nb 'test*s*'
 sexy_moves_test             = _nf_sexy_moves_test
 
-four_moves_tests    = False
+four_moves_tests    = True
 ortho_moves_test    = False
 arb_scramble_test   = True
 ttl_cube_test       = True
@@ -55,37 +55,37 @@ def main():
         print()
     
     if four_moves_tests == True:
-        # test R4
-        for i in range(5):
-            cube = make_new_cube()
-            moveseq = ['R'] * i
-            cube = moves(cube, moveseq)
-            print(f"'R' x {i}: {cube}")
-        print()
+        # # test R4
+        # for i in range(5):
+        #     cube = make_new_cube()
+        #     moveseq = ['R'] * i
+        #     cube = moves(cube, moveseq)
+        #     print(f"'R' x {i}: {cube}")
+        # print()
 
-        # test U4
-        for i in range(5):
-            cube = make_new_cube()
-            moveseq = ['U'] * i
-            cube = moves(cube, moveseq)
-            print(f"'U' x {i}: {cube}")
-        print()
+        # # test U4
+        # for i in range(5):
+        #     cube = make_new_cube()
+        #     moveseq = ['U'] * i
+        #     cube = moves(cube, moveseq)
+        #     print(f"'U' x {i}: {cube}")
+        # print()
 
-        # test F4
-        for i in range(5):
-            cube = make_new_cube()
-            moveseq = ['F'] * i
-            cube = moves(cube, moveseq)
-            print(f"'F'x{i}: {cube}")
-        print()
+        # # test F4
+        # for i in range(5):
+        #     cube = make_new_cube()
+        #     moveseq = ['F'] * i
+        #     cube = moves(cube, moveseq)
+        #     print(f"'F'x{i}: {cube}")
+        # print()
 
         # test ?4
-        for m in ['U', 'F', 'R', 'D', 'B']: #, 'L']:
+        for m in ['U', 'F', 'R', 'D', 'B', 'L']:
             for i in range(5):
                 cube = make_new_cube()
                 moveseq = [m] * i
                 cube = moves(cube, moveseq)
-                print(f"{m}x{i}: {cube}")
+                print(f"{m}{i}: {cube}")
             print()
 
     if ortho_moves_test == True:
