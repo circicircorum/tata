@@ -16,7 +16,10 @@ arb_scramble_test   = False
 ttl_cube_test       = False
 
 # generate moves
-move_generation_test = True
+move_generation_test = False
+
+# another arbitrary scramble
+arb_scr_test_two = True
 
 def main():
     if compress_notation_test == True:
@@ -157,15 +160,18 @@ def main():
         print(f'cube_ttl: {cnct}')
         # print(f'hr(T), mode prefixed, prefix mode, +extra edits: {cnct}')
 
-    if generate_moves == True:
+    if move_generation_test == True:
         # generate moves so they can be "hardcoded" / added to the list of primitive moves
-        for m in ['U', 'F', 'R', 'D', 'B', 'L']:
+        for m in ['U', 'F', 'R', 'D', 'B', 'L', 'x', 'y']:
             for i in range(1,5):
                 cube = make_new_cube()
                 moveseq = [m] * i
                 cube = moves(cube, moveseq)
                 print(f"{m}{i}: {cube}")
             print()
+    
+    if arb_scr_test_two == True:
+        pass
 
 if __name__ == '__main__':
     main()
