@@ -217,7 +217,7 @@ def do_move(cube, move):
     # code for debugging; may be removed in the future
     if move not in _nf_primitive_moves_list:
         if debug_prim_list == True:
-            print(f"{move} is a primitive move.")
+            print(f"{move} is NOT a primitive move.")
 
     # decide how the move should be performed
     if move in _nf_primitive_moves_list:
