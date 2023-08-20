@@ -29,7 +29,7 @@ _nf_w_corners_state_x = ''
 
 _nf_modes_dict = {'01' : 'w;wii;where-is-it;where-is-it notation;', # implies compressed notation
                   '02-0' : 'p;p;positional;positional notation;', # likewise for all other modes in the current dictionary
-                  '02-1' : 'p;p-wat;what-is-at;what-is-at notation;';
+                  '02-1' : 'p;p-wat;what-is-at;what-is-at notation;',
                   '03' : 'b;bld;bld-memo;bld memo notation (buffer-agnostic);'}
 
 _nf_modes_uncompressed_dict = {'01-f' : 'w-full', '02-f' : 'p-full'}
@@ -41,91 +41,241 @@ _nf_solved_w_expanded_unannotated = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrs
 _nf_solved_w_compressed_unannotated_bare = 'ABCDMNOPabcdhfrtmnop'
 # w and p notations are the same in the solved state
 _nf_solved_p_expanded_unannotated = _nf_solved_w_expanded_unannotated
-_nf_solved_p_compressed_unannotated_bare = _nf_solved_w_compressed_unannotated
+_nf_solved_p_compressed_unannotated_bare = _nf_solved_w_compressed_unannotated_bare
 
-# note: incomplete; does not account for edges yeta
 compress_notation_debug = False
-def compress_notation(cube, mode='01', human_readable=True):
+def compress_notation(cube, mode='01', human_readable=True, prefix_mode=False):
     if mode != '01':
         print('compress_notation: other modes are not yet supported, returning original cube...')
         return cube
+    
+    # mode: 'w';'01';
+    if cube[0] == 'w':
+        cube_stripped = cube[2:-1]
+        cube_stripped = cube_stripped.replace(',', '')
+    else:
+        cube_stripped = cube
+    cs = cube_stripped
+
     if human_readable == True:
         ## cube_in_compressed_notation = ''.join([[cube[x] for x in [0,1,2,3]].append(',').append([cube[x] for x in [12,13,14,15]])])
-        ## todo: add stripping / reformatting
         cicnl = []
         cube_in_compressed_notation_list = cicnl
         fu_corners = [0,1,2,3]
         fd_corners = [12,13,14,15]
-        pos_a = _nf_solved_w_expanded_unannotated.indexof('a')
-        pos_h = _nf_solved_w_expanded_unannotated.indexof('h')
-        pos_r =  _nf_solved_w_expanded_unannotated.indexof('r')
-        pos_f =  _nf_solved_w_expanded_unannotated.indexof('m')
+        pos_a = _nf_solved_w_expanded_unannotated.index('a')
+        pos_h = _nf_solved_w_expanded_unannotated.index('h')
+        pos_r =  _nf_solved_w_expanded_unannotated.index('r')
+        pos_m =  _nf_solved_w_expanded_unannotated.index('m')
 
         fu_edges = [pos_a, pos_a + 1, pos_a + 2, pos_a + 3]
         se_edges = [pos_h, pos_h - 2, pos_r, pos_r + 2]
         fd_edges = [pos_m, pos_m + 1, pos_m + 2, pos_m + 3]
         if compress_notation_debug == True:
-            print(f"pos_* test:: pos_a: {pos_a}, pos_h: {pos_h}, pos_r: {pos_r}, pos_f: {pos_f}")
-        for piece_type in [fu_corners, fd_corners, fu_edges, fd_edges]: # fu -> U-face, fd -> D-face, etc.
-            cicnl.append([cube[x] for x in piece_type])
+            print(f"compress_notation debug, pos_* test:: pos_a: {pos_a}, pos_h: {pos_h}, pos_r: {pos_r}, pos_m {pos_m}")
+        for piece_type in [fu_corners, fd_corners, fu_edges, se_edges, fd_edges]: # U/D-face corners/edges and E-slice edges
+            cicnl.append(''.join([cs[x] for x in piece_type]))
             cicnl.append(',')
-        cube_in_compressed_notation = ''.join(cicnl)
+        if compress_notation_debug == True:
+            print(f"compress_notation debug, cincl value:: {cicnl}")
+        cube_in_compressed_notation = ''.join(cicnl[:-1]) # remove trailing comma
 
     elif human_readable == False:
-        cube_in_compressed_notation = ''.join([cube[x] for x in [0,1,2,3,12,13,14,15,24,25,26,27,36,37,38,39]])
-    return cube_in_compressed_notation
+        cube_in_compressed_notation = ''.join([cs[x] for x in [0,1,2,3,12,13,14,15,24,25,26,27,31,29,41,43,36,37,38,39]])
+
+    if prefix_mode == True:
+        return '_'.join(['w', cube_in_compressed_notation, ''])
+    else:
+        return cube_in_compressed_notation
 
 def expand_notation(cube, mode='01'):
     print('expand_notation: function stub for expand_notation.')
 
+debug_translate_mode = False
+debug_translate_mode_second = False
 def translate_mode(mode_a, mode_b):
-    pass
+    # e.g. ABCDEFGHIJKL
+    cube_eg = '01_1_MGTN,KDQV_2_lsij,kvxq,unef_'
+    cube_explication = 'A@M, B@G, etc.'
+    alt_cube_eg = '02_1_'
+    proc_exp = 'at A -> look for piece at A-loc (i.e. A,F,V) -> found P@V => ~X(?)(no!!)~ Q@A'
+    cube_fuller = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
 
+    alg_proc = ''
+    print('UNIMPLEMENTED: translate_mode stub...')
+
+    #move_mapping = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
+    cube = 'MGTNILPJEHUCKDQVASBWORXFlsijcvgkrhotunefwxbqpmad'
+    code_mapping = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    solved_cube_state = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+
+    new_cube_l = []
+    for p in solved_cube_state:
+        if p in cube:
+            if debug_translate_mode_second == True:
+                pass
+            new_cube_l.append(code_mapping[cube.index(p)])
+        else:
+            if debug_translate_mode == True:
+                print(f'translate_mode: {p} not in mapping')
+            new_cube_l.append(p)
+
+    new_cube_translation = ''.join(new_cube_l)
+    # new_cube_translation = new_cube_translation.replace('w_', 'p_', 1)
+    return new_cube_translation
+
+debug_perform_move = False
+debug_perform_move_second = False
 def perform_move(cube, move):
-    pass
+    # print(f"perform_move: function stub for perform_move. Move {move} was asked to be performed. Returning original cube...")
+    
+    if move == 'x\'':
+        move_mapping = 'GFEHNOPMLIJKSRQTBCDAVWXUfehgnopmlijkrqtsbcdavwxu'
+    elif move == 'U':
+        move_mapping = 'BCDAVUGHIFELMNOPQRJKSTWXbcdavfghieklmnopqrjtuswx'
+    elif move == 'R':
+        move_mapping = 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx'
+    else:
+        print(f"perform_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
+        # move_mapping = ''.join('abcdefghijklmnopqrstuvwx'.upper(), 'abcdefghijklmnopqrstuvwx')
+        return cube
+    
+    alpha = 'abcdefghijklmnopqrstuvwx'
+    alpha_cap = alpha.upper()
+    solved_cube_state = ''.join([alpha_cap, alpha])
+    if debug_perform_move_second == True:
+        print(solved_cube_state)
+    if debug_perform_move == True:
+        print(f'alpha_cap: {alpha_cap}')
 
-def move(cube, move):
+    new_cube_l = []
+    for p in cube:
+        if p in move_mapping:
+            if debug_perform_move_second == True:
+                to_add = move_mapping[solved_cube_state.index(p)]
+                print(f"pm: {to_add}")
+            new_cube_l.append(move_mapping[solved_cube_state.index(p)])
+        else:
+            if debug_perform_move == True:
+                print(f'perform_move: {p} not in mapping')
+            new_cube_l.append(p)
+
+    new_cube = ''.join(new_cube_l)
+    return new_cube
+
+def do_move(cube, move):
+    # R-moves (TBI)
     if move == 'R':
         cube = perform_move(cube, 'R')
     elif move == 'R2':
         cube = perform_move(cube, 'R')
         cube = perform_move(cube, 'R')
     elif move == 'R\'':
-        cube = perform_move(cube, 'R2') # note: recursion
+        #cube = do_move(cube, 'R2') # note: recursively defined
         cube = perform_move(cube, 'R')
+        cube = perform_move(cube, 'R')
+        cube = perform_move(cube, 'R')
+    # U-moves
     elif move == 'U':
         cube = perform_move(cube, 'U')
+    elif move == 'U2':
+        cube = perform_move(cube, 'U')
+        cube = perform_move(cube, 'U')
+    elif move == 'U\'':
+        cube = perform_move(cube, 'U')
+        cube = perform_move(cube, 'U')
+        cube = perform_move(cube, 'U')
+    # x-moves
     elif move == 'x':
-        cube = perform_move(cube, 'x')
+        cube = perform_move(cube, 'x\'')
+        cube = perform_move(cube, 'x\'')
+        cube = perform_move(cube, 'x\'')
+    elif move == 'x2':
+        cube = perform_move(cube, 'x\'')
+        cube = perform_move(cube, 'x\'')
+    elif move == 'x\'':
+        cube = perform_move(cube, 'x\'')
+    # F-moves
+    elif move == 'F':
+        cube = do_move(cube, 'x')
+        cube = do_move(cube, 'U')
+        cube = perform_move(cube, 'x\'')
+    elif move == 'F2':
+        cube = do_move(cube, 'x')
+        cube = do_move(cube, 'U2')
+        cube = perform_move(cube, 'x\'')
+    elif move == 'F\'':
+        cube = do_move(cube, 'x')
+        cube = do_move(cube, 'U\'')
+        cube = perform_move(cube, 'x\'')
+    # D-moves
+    elif move == 'D':
+        cube = do_move(cube, 'x2')
+        cube = perform_move(cube, 'U')
+        cube = do_move(cube, 'x2')
+    elif move == 'D2':
+        cube = do_move(cube, 'x2')
+        cube = do_move(cube, 'U2')
+        cube = do_move(cube, 'x2')
+    elif move == 'D\'':
+        cube = do_move(cube, 'x2')
+        cube = do_move(cube, 'U\'')
+        cube = do_move(cube, 'x2')
+    # B-moves
+    elif move == 'B':
+        cube = perform_move(cube, 'x\'')
+        cube = perform_move(cube, 'U')
+        cube = do_move(cube, 'x')
+    elif move == 'B2':
+        cube = perform_move(cube, 'x\'')
+        cube = do_move(cube, 'U2')
+        cube = do_move(cube, 'x')
+    elif move == 'B\'':
+        cube = perform_move(cube, 'x\'')
+        cube = do_move(cube, 'U\'')
+        cube = do_move(cube, 'x')
+    else:
+        print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
+        
+
+
     return cube
 
 def moves(cube, moves):
     for move in moves:
-        cube = move(cube, move)
+        cube = do_move(cube, move)
     return cube
 
 # note the different ways in which the cube state is represented.
-def make_new_cube(mode='01'):
+def make_new_cube(mode='01-l'):#mode='01'):
+    # w
     if mode == '01':
         return '01_1_ABCD,MNOP_2_abcd,hfrt,mnop_'
+    # w-simp(?)
+    if mode == '01-s':
+        return '01_ABCD,MNOP_abcd,hfrt,mnop_'
+    # w-learn
+    if mode == '01-l':
+        return '01_ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    # w-learn-implied
+    if mode == '01-li':
+        return 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    # w-full
+    if mode == '01-f':
+        return '011_1_ABCD,EFGH,IJKL,MNOP,QRST,UVWX_2_abcd,efgh,ijkl,mnop,qrst,uvwx_'
+    # w-ultra-full
+    if mode == '01-ff':
+        return '0111_1_ABCD,EFGH,IJKL,MNOP,QRST,UVWX_(ABCD,MNOP)_2_abcd,efgh,ijkl,mnop,qrst,uvwx_(abcd,hfrt,mnop)_'
+    # p
     if mode == '02-0' or mode == '02-1':
         return '02_1_ABCD,MNOP_2_abcd,hfrt,mnop_'
+    # b
     if mode == '03':
         return ''
 
 
 def main():
-    print('compress_notation test:')
-    print(compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'))
-    print(compress_notation('ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx', human_readable=False))
-
-    cube = make_new_cube()
-    cube = moves(cube, ['R'])
-    print(f"cube;R: {cube}")
-    cube = moves(cube, ['x', 'U'])
-    print(f"cube;R: {cube}")
-    print()
-    return
+    return 'True'
 
 if __name__ == '__main__':
     main()
