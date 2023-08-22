@@ -183,7 +183,13 @@ def main():
             print()
 
     if arb_scr_test_two == True:
-        pass
+        cube = make_new_cube()
+        tbp = 'sexy F B\''
+        mtp = tbp.split()
+        cube = moves(cube, mtp)
+        print(cube)
+        cube = compress_notation(cube, prefix_mode=True)
+        print(cube)
 
 if __name__ == '__main__':
     main()
