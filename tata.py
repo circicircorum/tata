@@ -58,7 +58,6 @@ def compress_notation(cube, mode='01', human_readable=True, prefix_mode=False):
     else:
         cube_stripped = cube
     cs = cube_stripped
-    print(cs)
 
     if human_readable == True:
         ## cube_in_compressed_notation = ''.join([[cube[x] for x in [0,1,2,3]].append(',').append([cube[x] for x in [12,13,14,15]])])
@@ -68,8 +67,13 @@ def compress_notation(cube, mode='01', human_readable=True, prefix_mode=False):
         fd_corners = [12,13,14,15]
         pos_a = _nf_solved_w_expanded_unannotated.index('a')
         pos_h = _nf_solved_w_expanded_unannotated.index('h')
-        pos_r =  _nf_solved_w_expanded_unannotated.index('r')
-        pos_m =  _nf_solved_w_expanded_unannotated.index('m')
+        pos_r = _nf_solved_w_expanded_unannotated.index('r')
+        pos_m = _nf_solved_w_expanded_unannotated.index('m')
+        # print(f"pos_a: {pos_a}, pos_h: {pos_h}, pos_r: {pos_r}, pos_m: {pos_m}")
+        # pos_a = 24
+        # pos_h = 31
+        # pos_r = 41
+        # pos_m = 36
 
         fu_edges = [pos_a, pos_a + 1, pos_a + 2, pos_a + 3]
         se_edges = [pos_h, pos_h - 2, pos_r, pos_r + 2]
@@ -107,10 +111,10 @@ def translate_mode(mode_a, mode_b):
     alg_proc = ''
     print('UNIMPLEMENTED: translate_mode stub...')
 
-    #move_mapping = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
-    cube = 'MGTNILPJEHUCKDQVASBWORXFlsijcvgkrhotunefwxbqpmad'
-    code_mapping = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
-    solved_cube_state = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    # move_mapping = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
+    cube                = 'MGTNILPJEHUCKDQVASBWORXFlsijcvgkrhotunefwxbqpmad'
+    code_mapping        = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    solved_cube_state   = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
 
     new_cube_l = []
     for p in solved_cube_state:
@@ -206,6 +210,8 @@ debug_prim_list = False
 if debug_prim_list == True:
     print(f"debug(pl):: _nf_primitive_moves_list: {_nf_primitive_moves_list}")
 
+
+# N.B. move compositions are supposed to be lists of primitive moves
 _nf_composite_moves_dict = {
     # composite moves
     'sexy' : ['R', 'U', 'R\'', 'U\'']
