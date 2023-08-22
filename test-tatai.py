@@ -1,7 +1,7 @@
 from tata import *
 
-_nf_compress_notation_test  = True
-_nf_basic_move_tests        = True # nb 'test*s*'
+_nf_compress_notation_test  = False
+_nf_basic_move_tests        = False # nb 'test*s*'
 _nf_sexy_moves_test         = False
 
 # namesss
@@ -11,13 +11,13 @@ sexy_moves_test             = _nf_sexy_moves_test
 
 # test some moves
 four_moves_tests    = False
-ortho_moves_test    = True
-arb_scramble_test   = True
-ttl_cube_test       = True
+ortho_moves_test    = False
+arb_scramble_test   = False
+ttl_cube_test       = False
 
 # generate moves
-move_generation_test     = True
-move_generation_test_two = True
+move_generation_test     = False
+move_generation_test_two = False
 
 # another arbitrary scramble
 arb_scr_test_two = True

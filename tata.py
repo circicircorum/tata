@@ -140,8 +140,25 @@ _nf_move_mapping_dict = {
     # F-moves
     'F'     : 'JBCIHEFGONKLMWVPQRSTUDAXabcihefgnjklmwopqrstuvdx',
     'F2'    : 'NBCOGHEFVWKLMADPQRSTUIJXabcnghefwjklmdopqrstuvix',
-    'F\''   : 'WBCVFGHEDAKLMJIPQRSTUONXabcwfghedjklmiopqrstuvnx'
+    'F\''   : 'WBCVFGHEDAKLMJIPQRSTUONXabcwfghedjklmiopqrstuvnx',
+    # R-moves
+    'R'     : 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx',
+    'R2'    : 'ABNMRFGSKLIJDCOPQEHTUVWXabmdefgrklijcnopqhstuvwx',
+    'R\''   : 'ABEHNFGMLIJKSROPQCDTUVWXabhdefgmlijkrnopqcstuvwx',
+    # D-moves
+    'D'     : '01_ABCDEFILRJKQPMNOWXSTUVHGabcdeflhijkqpmnoxrstuvwg',
+    'D2'    : '01_ABCDEFRQXJKWOPMNHGSTUVLIabcdefqhijkxopmngrstuvwl',
+    'D\''   : '01_ABCDEFXWGJKHNOPMLISTUVQRabcdefxhijkgnopmlrstuvwq',
+    # B-moves
+    'B'     : '01_AXUDEFGHIJBCKNOLRSTQPVWMaucdefghijblmnokrstqpvwx',
+    'B2'    : '01_AMPDEFGHIJXUBNOCSTQRLVWKapcdefghijulmnobstqrkvwx',
+    'B\''   : '01_AKLDEFGHIJMPXNOUTQRSCVWBakcdefghijplmnoutqrsbvwx',
+    # L-moves
+    'L'     : '01_GFCDEOPHIJKLMNQTBRSAVWXUfbcdeoghijklmntpqrsavwxu',
+    'L2'    : '01_POCDEQTHIJKLMNBAFRSGWXUVobcdetghijklmnapqrsfwxuv',
+    'L\''   : '01_TQCDEBAHIJKLMNFGORSPXUVWtbcdeaghijklmnfpqrsoxuvw'
 }
+
 
 debug_perform_move = False
 debug_perform_move_second = False
@@ -157,13 +174,6 @@ if debug_perform_move == True:
 def perform_move(cube, move):
     if move in _nf_move_mapping_dict:
         move_mapping = _nf_move_mapping_dict[move]
-    # R-moves
-    elif move == 'R':
-        move_mapping = 'ABRSCFGDJKLIHEOPQNMTUVWXabrdefgcjklihnopqmstuvwx'
-    elif move == 'R2':
-        move_mapping = 'ABNMRFGSKLIJDCOPQEHTUVWXabmdefgrklijcnopqhstuvwx'
-    elif move == 'R\'':
-        move_mapping = 'ABEHNFGMLIJKSROPQCDTUVWXabhdefgmlijkrnopqcstuvwx'
     else:
         print(f"perform_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
         return cube
@@ -184,7 +194,6 @@ def perform_move(cube, move):
     return new_cube
 
 # create a list of move primitives used to check the validity of moves (in do_move)
-# _nf_primitive_moves_list: # could/should it handle synonyms? i.e. use a dict instead?
 _nf_primitive_moves_list_bare = ['x', 'y', 'U', 'F', 'R']
 _nf_primitive_moves_list = []
 for bm in _nf_primitive_moves_list_bare:
@@ -195,18 +204,8 @@ if debug_prim_list == True:
     print(f"debug(pl):: _nf_primitive_moves_list: {_nf_primitive_moves_list}")
 
 _nf_composite_moves_dict = {
-    # D-moves
-    'D'     : ['x2', 'U', 'x2'],
-    'D2'    : ['x2', 'U2', 'x2'],
-    'D\''   : ['x2', 'U\'', 'x2'],
-    # B-moves
-    'B'     : ['x\'', 'U', 'x'],
-    'B2'    : ['x\'', 'U2', 'x'],
-    'B\''   : ['x\'', 'U\'', 'x'],
-    # L-moves
-    'L'     : ['y2', 'R', 'y2'],
-    'L2'    : ['y2', 'R2', 'y2'],
-    'L\''   : ['y2', 'R\'', 'y2'],
+    # composite moves
+    'sexy' : 'R U R\' U\''
 }
 
 def do_move(cube, move):
@@ -223,6 +222,7 @@ def do_move(cube, move):
         print(f"do_move: Unimplemented move {move} was asked to be performed. Returning original cube...")
     return cube
 
+_nf_suppress_warnings = False
 def moves(cube, moves):
     if isinstance(moves, list):
         pass # maybe it will do sth in e futur
