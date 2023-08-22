@@ -241,6 +241,7 @@ def moves(cube, moves):
     for move in moves:
         cube = do_move(cube, move)
     return cube
+do_move_sequence = moves
 
 # nb the different ways in which the cube state is represented.
 def make_new_cube(mode='01-l'):#mode='01'):
