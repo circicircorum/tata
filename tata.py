@@ -53,9 +53,12 @@ def compress_notation(cube, mode='01', human_readable=True, prefix_mode=False):
     if cube[0] == 'w':
         cube_stripped = cube[2:-1]
         cube_stripped = cube_stripped.replace(',', '')
+    elif cube[0:3] == '01_':
+        cube_stripped = cube[3:-1]
     else:
         cube_stripped = cube
     cs = cube_stripped
+    print(cs)
 
     if human_readable == True:
         ## cube_in_compressed_notation = ''.join([[cube[x] for x in [0,1,2,3]].append(',').append([cube[x] for x in [12,13,14,15]])])
@@ -146,17 +149,17 @@ _nf_move_mapping_dict = {
     'R2'    : 'ABNMRFGSKLIJDCOPQEHTUVWXabmdefgrklijcnopqhstuvwx',
     'R\''   : 'ABEHNFGMLIJKSROPQCDTUVWXabhdefgmlijkrnopqcstuvwx',
     # D-moves
-    'D'     : '01_ABCDEFILRJKQPMNOWXSTUVHGabcdeflhijkqpmnoxrstuvwg',
-    'D2'    : '01_ABCDEFRQXJKWOPMNHGSTUVLIabcdefqhijkxopmngrstuvwl',
-    'D\''   : '01_ABCDEFXWGJKHNOPMLISTUVQRabcdefxhijkgnopmlrstuvwq',
+    'D'     : 'ABCDEFILRJKQPMNOWXSTUVHGabcdeflhijkqpmnoxrstuvwg',
+    'D2'    : 'ABCDEFRQXJKWOPMNHGSTUVLIabcdefqhijkxopmngrstuvwl',
+    'D\''   : 'ABCDEFXWGJKHNOPMLISTUVQRabcdefxhijkgnopmlrstuvwq',
     # B-moves
-    'B'     : '01_AXUDEFGHIJBCKNOLRSTQPVWMaucdefghijblmnokrstqpvwx',
-    'B2'    : '01_AMPDEFGHIJXUBNOCSTQRLVWKapcdefghijulmnobstqrkvwx',
-    'B\''   : '01_AKLDEFGHIJMPXNOUTQRSCVWBakcdefghijplmnoutqrsbvwx',
+    'B'     : 'AXUDEFGHIJBCKNOLRSTQPVWMaucdefghijblmnokrstqpvwx',
+    'B2'    : 'AMPDEFGHIJXUBNOCSTQRLVWKapcdefghijulmnobstqrkvwx',
+    'B\''   : 'AKLDEFGHIJMPXNOUTQRSCVWBakcdefghijplmnoutqrsbvwx',
     # L-moves
-    'L'     : '01_GFCDEOPHIJKLMNQTBRSAVWXUfbcdeoghijklmntpqrsavwxu',
-    'L2'    : '01_POCDEQTHIJKLMNBAFRSGWXUVobcdetghijklmnapqrsfwxuv',
-    'L\''   : '01_TQCDEBAHIJKLMNFGORSPXUVWtbcdeaghijklmnfpqrsoxuvw'
+    'L'     : 'GFCDEOPHIJKLMNQTBRSAVWXUfbcdeoghijklmntpqrsavwxu',
+    'L2'    : 'POCDEQTHIJKLMNBAFRSGWXUVobcdetghijklmnapqrsfwxuv',
+    'L\''   : 'TQCDEBAHIJKLMNFGORSPXUVWtbcdeaghijklmnfpqrsoxuvw'
 }
 
 
@@ -194,7 +197,7 @@ def perform_move(cube, move):
     return new_cube
 
 # create a list of move primitives used to check the validity of moves (in do_move)
-_nf_primitive_moves_list_bare = ['x', 'y', 'U', 'F', 'R']
+_nf_primitive_moves_list_bare = ['x', 'y', 'U', 'F', 'R', 'D', 'B', 'L']
 _nf_primitive_moves_list = []
 for bm in _nf_primitive_moves_list_bare:
     _nf_primitive_moves_list.extend([bm, bm + '2', bm + '\''])
@@ -205,7 +208,7 @@ if debug_prim_list == True:
 
 _nf_composite_moves_dict = {
     # composite moves
-    'sexy' : 'R U R\' U\''
+    'sexy' : ['R', 'U', 'R\'', 'U\'']
 }
 
 def do_move(cube, move):
@@ -228,8 +231,7 @@ def moves(cube, moves):
         pass # maybe it will do sth in e futur
     else:
         if _nf_suppress_warnings == False:
-            print(f"WARNING:: moves: the variable 'moves' is a {type(moves)} instead of a list; \
-                    be very sure that this is what you want to do!")
+            print(f"WARNING:: moves: the variable 'moves' is a {type(moves)} instead of a list; be very sure that this is what you want to do!")
     for move in moves:
         cube = do_move(cube, move)
     return cube
