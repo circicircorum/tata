@@ -1,0 +1,20 @@
+move movedefs to a dictionary/list
+(streamline the process)
+(i.e. avoid calling moves() in do_move())
+
+unit tests for some moves/move combinations
+
+make it clearer which mode the code is meant for
+(e.g. perform_move is only correct in w-notation.)
+(fix ambiguities / names and functions that implicitly use w-notation)
+
+
+---KNOWN?-BUGS?---
+
+1. (FIXED) _nf_suppress_warnings is not defined (i.e. if a non-list is given to moves() an error will be raised)
+
+---END-OF-KNOWN-BUGS---
+
+
+lower priority:
+slice moves?
