@@ -100,21 +100,28 @@ def expand_notation(cube, mode='01'):
 
 debug_translate_mode = False
 debug_translate_mode_second = False
-def translate_mode(mode_a, mode_b):
-    # e.g. ABCDEFGHIJKL
-    cube_eg = '01_1_MGTN,KDQV_2_lsij,kvxq,unef_'
-    cube_explication = 'A@M, B@G, etc.'
-    alt_cube_eg = '02_1_'
-    proc_exp = 'at A -> look for piece at A-loc (i.e. A,F,V) -> found P@V => ~X(?)(no!!)~ Q@A'
-    cube_fuller = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
+def translate_mode(cube, mode_a='w', mode_b='p'):
+    # # e.g. ABCDEFGHIJKL
+    # cube_eg = '01_1_MGTN,KDQV_2_lsij,kvxq,unef_'
+    # cube_explication = 'A@M, B@G, etc.'
+    # alt_cube_eg = '02_1_'
+    # proc_exp = 'at A -> look for piece at A-loc (i.e. A,F,V) -> found P@V => ~X(?)(no!!)~ Q@A'
+    # cube_fuller = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
 
-    alg_proc = ''
-    print('UNIMPLEMENTED: translate_mode stub...')
+    # alg_proc = ''
+    # print('UNIMPLEMENTED: translate_mode stub...')
+    if mode_a != 'w':
+        print('translate_mode: only w->p TL is supported at the moment; exiting...')
+        return
+    if mode_b != 'p':
+        print('translate_mode: only w->p TL is supported at the moment; exiting...')
+        return
 
-    # move_mapping = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
-    cube                = 'MGTNILPJEHUCKDQVASBWORXFlsijcvgkrhotunefwxbqpmad'
+    # # move_mapping = '01_MGTN,ILPJ,EHUC,KDQV,ASBW,ORXF,lsij,cvgk,rhot,unef,wxbq,pmad'
+    # cube                = 'MGTNILPJEHUCKDQVASBWORXFlsijcvgkrhotunefwxbqpmad'
     code_mapping        = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
     solved_cube_state   = 'ABCDEFGHIJKLMNOPQRSTUVWXabcdefghijklmnopqrstuvwx'
+    
 
     new_cube_l = []
     for p in solved_cube_state:

@@ -22,7 +22,7 @@ def basic_scramble_test():
         cube = moves(cube, scramble_l)
         print(f"scramble_{i}_m = \"{scramble}\"")
         print(f"scramble_{i}_w = \"{cube}\"")
-    
+
     print()
     print('testing more stuffs...')
     do("sexy sexy sexy sexy sexy".split(), verbose=True)

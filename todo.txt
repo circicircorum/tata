@@ -1,3 +1,6 @@
+support inverse scramble/scrambling
+(support commutator notation ?)
+
 move movedefs to a dictionary/list
 (streamline the process)
 (i.e. avoid calling moves() in do_move())
@@ -8,6 +11,8 @@ make it clearer which mode the code is meant for
 (e.g. perform_move is only correct in w-notation.)
 (fix ambiguities / names and functions that implicitly use w-notation)
 
+perform_move: _nf_solved_cube_state_w is redundant and references to it should be replaced
+with _nf_solved_w_expanded_unannotated or equivalent
 
 ---KNOWN?-BUGS?---
 
